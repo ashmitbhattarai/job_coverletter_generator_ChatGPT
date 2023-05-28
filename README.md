@@ -1,1 +1,3 @@
-# job_coverletter_generator_ChatGPT
+# Cover Letter Generator using ChatGPT
+
+loading.....
