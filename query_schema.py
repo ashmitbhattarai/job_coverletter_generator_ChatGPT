@@ -126,7 +126,7 @@ Assist in the development of AI-related strategies, roadmaps, and initiatives
 """
 
 
-
+print (chain.prompt.format_prompt('[user_input]').tostring())
 # output = chain.predict_and_parse(text=(input_text))["data"]
 # print (output)
 
