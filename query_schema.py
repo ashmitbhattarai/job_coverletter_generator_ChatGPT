@@ -5,7 +5,7 @@ from kor.nodes import Object, Text, Number
 #Langchain imports
 from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
-
+from langchain.llm import HuggingFaceHub
 # Standard Helper Libraries
 import pandas as pd
 import os
@@ -14,8 +14,15 @@ import os
 from api_keys import open_api_key
 
 
+
 # define a LLM here
-llm = ""
+llm = HuggingFaceHub(
+    repo_id='google/flan-tx-xl',
+    model_kwargs={
+        'temperature':0.1,
+        "max_length":64
+    }
+)
 
 
 # Kerr Schemata
