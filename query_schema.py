@@ -15,20 +15,21 @@ from api_keys import open_api_key,hugging_face_api_key
 
 
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = hugging_face_api_key
-
-
-key = "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"
+os.environ["OPENAI_API_KEY"] = open_api_key
 
 
 # define a LLM here
-llm = HuggingFaceHub(
-    repo_id='google/flan-t5-xl',
-    model_kwargs={
-        'temperature':0.5,
-        "max_length":128
-    }
-)
+# llm = HuggingFaceHub(
+#     repo_id='google/flan-t5-xl',
+#     model_kwargs={
+#         'temperature':0.5,
+#         "max_length":128
+#     }
+# )
 
+llm = OpenAI(
+    temperature=0.9
+)
 
 # Kerr Schemata
 
@@ -45,20 +46,24 @@ skills_schema = Object(
         Text(
             id="responsibilities",
             description="Roles and Responsibilites in the Job Description"
+        ),
+        Text(
+            id="experience",
+            description="Experience of work in certain industry domain"
         )
     ],
     examples = [
         (
             "Are fluent with Python and experienced with Jupyter notebooks",
-            [{"technologies":"Python"},{"technologies":"Jupyter"}]
+            [{"technologies":"Python"},{"technologies":"Jupyter notebook"}]
         ),
         (
             "Have experience in at least one of the following: neuroscience, BCI experimentation and neural signal processing",
-            [{"technologies":"neuroscience"},{"technologies":"BCI experimentation"},{"technologies":"neural signal processing"}]
+            [{"experience":"neuroscience"},{"experience":"BCI experimentation"},{"experience":"neural signal processing"}]
         ),
         (
             "You will come up with technical solutions and process improvements for business needs",
-            [{"reponsibi    lities":"technical solutions"},{"responsibilites":"process improvement"}]
+            [{"reponsibilities":"technical solutions"},{"responsibilites":"process improvement"}]
         ),
         (
             "You will set up and help with the maintenance of the ongoing infrastructure.",
