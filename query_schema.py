@@ -13,7 +13,11 @@ import os
 # env variables
 from api_keys import open_api_key,hugging_face_api_key
 
+
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = hugging_face_api_key
+
+
+key = "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"
 
 
 # define a LLM here
