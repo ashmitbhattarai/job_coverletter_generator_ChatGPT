@@ -5,22 +5,27 @@ from kor.nodes import Object, Text, Number
 #Langchain imports
 from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
-from langchain.llm import HuggingFaceHub
+from langchain.llms import HuggingFaceHub
 # Standard Helper Libraries
 import pandas as pd
 import os
 
 # env variables
-from api_keys import open_api_key
+from api_keys import open_api_key,hugging_face_api_key
+
+
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = hugging_face_api_key
+
 
 key = "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"
 
+
 # define a LLM here
 llm = HuggingFaceHub(
-    repo_id='google/flan-tx-xl',
+    repo_id='google/flan-t5-xl',
     model_kwargs={
-        'temperature':0.1,
-        "max_length":64
+        'temperature':0.5,
+        "max_length":128
     }
 )
 
@@ -53,7 +58,7 @@ skills_schema = Object(
         ),
         (
             "You will come up with technical solutions and process improvements for business needs",
-            [{"reponsibilities":"technical solutions"},{"responsibilites":"process improvement"}]
+            [{"reponsibi    lities":"technical solutions"},{"responsibilites":"process improvement"}]
         ),
         (
             "You will set up and help with the maintenance of the ongoing infrastructure.",
@@ -64,8 +69,15 @@ skills_schema = Object(
 
 chain = create_extraction_chain(llm,skills_schema)
 
-input_text = ""
+input_text = """Lead brainstorming sessions to develop potential solutions for business needs or problems
+Provide specifications according to which the solution is defined, managed, and delivered
+Identify opportunities for process improvements
+Define features, development phases, and solution requirements.
+Supervised, Unsupervised and reinforcement learning Using Python
+Set-up, maintenance, and ongoing development of continuous build/ integration infrastructure (CI/CD)
+Experience with different NoSQL and SQL, graph databases"""
 
 output = chain.predict_and_parse(text=(input_text))["data"]
+print (output)
 
 # i need job responsibilites, job skills, and benifits, also summary on company, company goals ????
