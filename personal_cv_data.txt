@@ -1,4 +1,10 @@
 Work Experience
     Senior Data Scientist
-        Perceptyx Inc. (Pyx): Perceptyx combines employee surveys and people analytics to see whats going on in your organisation.
+        Perceptyx Inc. (Pyx): Perceptyx combines Employee Surveys and People Analytics to see whats going on in your organisation.
         Temecula, CA, USA
+    
+        Achievements:
+            - Design, development, documentation, testing and maintenance of Pyx Sentiment Analysis Engine with 87%+ accuracy on unseen test data. 22% increase in the detection of Sentiments.
+            - Oversee Design, development, documentation, testing, and maintenance of Thematic Extraction Supervised Engine with 65%+ accuracy on complex Multi-Label Classification System and Thematic Extraction Unsupervised Engine on new Themes Detection. 10% increased Theme Identification for Open-Ended Answers.
+            - Design and deploy Statistical Forecast Models, Predictive models for Employee Insights Analytics and Benchmarking: Fully eliminated Human-In-The-Loop processes using SnowFlake and ML algorithms.
+            - ML Engineering: Development and deployment of ML and Deep Learning models on AWS Sagemaker and Pyx Cloud

@@ -1,5 +1,5 @@
 # Kor imports
-from kor.nodes import Object, Text, Number
+from kor.nodes import Object, Text, Selection, Option,Number
 
 # KOR Objects
 ## Skills Schemata
@@ -47,8 +47,8 @@ skills_schema = Object(
             [{"reponsibilities":"Collaborate with cross-functional teams"}]
         ),
         (
-            "We are committed to attracting and retaining people who have the right mix of skills, knowledge, leadership, and motivation",
-            [{"personal_skills":"right mix of skills"},{"personal_skills":"knowledge"},{"personal_skills":"leadership"},{"personal_skills":"motivation"}]
+            "We are committed to attracting and retaining people who have the right mix of skills, knowledge, leadership, and self-motivation",
+            [{"personal_skills":"skillfull"},{"personal_skills":"knowledgeable"},{"personal_skills":"leadership"},{"personal_skills":"motivated"}]
         )
     ],
     many=True
@@ -74,12 +74,64 @@ company_job_schema = Object(
             id="work_done",
             description="What does the company uses AI services for?"
         ),
+        Selection(
+            id="job_type",
+            description="Is the Job Full Time, Part-Time, Contract or Freelance",
+            options = [
+                Option(id="Full-Time", description="Full-time basis"),
+                Option(id="Part-Time", description="Part-time basis"),
+                Option(id="Contract", description="Casual basis"),
+                Option(id="Freelance", description="None of Above"),
+            ]
+        )
         skills_schema    
     ]
 )
 
+date_rage = Object(
+    id="date_range",
+    description="""
+        The range of date that person has worked in the company for
+    """,
+    attributes=[
+        Number(
+            id="start_date",
+            description="The start date of the person in company"
+        ),
+        Number(
+            id="end_date",
+            description="The last date of work for person in company"
+        )
+    ],
+    examples=[
+        (
+            "Perceptyx Inc. (Pyx)12/2017 - 01/2023",
+            [
+                {"start_date": 2017, "end_date": 2023},
+            ]
+        )
+    ]
+)
 
 applicant_schema = Object(
     id = "applicant_data",
-    description = "Includes applicant's name, Companies Worked for, experiences in those companies"
+    description = "Includes applicant's name, Skills, Companies Worked for, experiences in those companies, Certifications, Personal Projects, Education",
+    attributes=[
+        Text(
+            id="applicant_name",
+            description = "Name of the Person in CV or Resume Data",
+            many=False
+        ),
+        Text(
+            id="company",
+            description="Name of the company applicant has worked for",
+            examples = [
+                ("Work Experience Senior Data Scientist Perceptyx Inc. (Pyx): Perceptyx combines Employee Surveys","Perceptyx Inc.")
+            ]
+            many=True
+        ),
+        Number(
+            id = ""
+        )
+    ]
 )
