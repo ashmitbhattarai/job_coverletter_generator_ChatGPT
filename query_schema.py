@@ -78,17 +78,17 @@ company_job_schema = Object(
             id="job_type",
             description="Is the Job Full Time, Part-Time, Contract or Freelance",
             options = [
-                Option(id="Full-Time", description="Full-time basis"),
-                Option(id="Part-Time", description="Part-time basis"),
-                Option(id="Contract", description="Casual basis"),
-                Option(id="Freelance", description="None of Above"),
+                Option(id="full_time", description="Full-time basis"),
+                Option(id="part_time", description="Part-time basis"),
+                Option(id="contract", description="Casual basis"),
+                Option(id="freelance", description="None of Above"),
             ]
-        )
+        ),
         skills_schema    
     ]
 )
 
-date_rage = Object(
+date_range = Object(
     id="date_range",
     description="""
         The range of date that person has worked in the company for
@@ -110,7 +110,8 @@ date_rage = Object(
                 {"start_date": 2017, "end_date": 2023},
             ]
         )
-    ]
+    ],
+    many=True
 )
 
 applicant_schema = Object(
@@ -119,7 +120,7 @@ applicant_schema = Object(
     attributes=[
         Text(
             id="applicant_name",
-            description = "Name of the Person in CV or Resume Data",
+            description = "Name of the Person or applicant this CV or Resume is of",
             many=False
         ),
         Text(
@@ -127,11 +128,66 @@ applicant_schema = Object(
             description="Name of the company applicant has worked for",
             examples = [
                 ("Work Experience Senior Data Scientist Perceptyx Inc. (Pyx): Perceptyx combines Employee Surveys","Perceptyx Inc.")
-            ]
+            ],
+            many=True
+        ),
+        date_range,
+        Text(
+            id="technologies",
+            description = "technologies the applicant has worked on",
+            many=True
+        ),
+        Text(
+            id="tasks",
+            description = "achievements and task the applicant has worked on the company",
             many=True
         ),
         Number(
-            id = ""
+            id = "years_of_experience",
+            description = "Number of years the applicant has worked for ",
+            examples = [
+                ("Around 6 years of experience as Python Developer and Data Scientist.",6)
+            ],
+            many=True
+        )
+    ],
+
+    examples = [
+        (
+            "ChaptGPT for Job Application Cover Letter Generation using LangChain, KOR and PineCone v2",
+            [
+                {"technologies":"ChatGPT"},
+                {"technologies":"LangChain"},
+                {"technologies":"KOR"},
+                {"technologies":"PineCone"}
+            ]
+        ),
+        (
+            "MLOps AWS Athena PySpark RESTful APIs OpenAI ChatGPT",
+            [
+                {"technologies":"MLOps"},
+                {"technologies":"AWS Athena"},
+                {"technologies":"PySpark"},
+                {"technologies":"RESTful API"},
+                {"technologies":"OpenAI"},
+                {"technologies":"ChatGPT"}
+            ]
+
+        ),
+        (
+            """ShopGrok
+                09/2018 - 05/2022,
+                ShopGrok is a provider of consumer insights and data analytics to the retail and consumer sector
+                Sydney,Australia
+
+                Achievements/Tasks:
+
+                Design, develop, modify, document, test, implement, and maintain ShopGrok Data Mining and Ingestion
+                Pipeline for SaaS platform. Scaled up the infrastructure to collect 1+ Million data points daily.""",
+            [
+                {"tasks":"Design, develop, modify, document, test, implement, and maintain ShopGrok Data Mining and Ingestion Pipeline","company":"ShopGrok","date_range":{"start_date":2018,"end_date":2021}},
+                {"tasks":"Scaled up the infrastructure to collect 1+ Million data points daily.","company":"ShopGrok","date_range":{"start_date":2018,"end_date":2021}}
+            ]
         )
     ]
 )

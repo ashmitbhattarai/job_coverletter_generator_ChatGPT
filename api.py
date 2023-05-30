@@ -9,7 +9,7 @@ import pandas as pd
 import os
 
 # Internal Libraries
-from query_schema import company_job_schema
+from query_schema import company_job_schema,applicant_schema
 from langchain.callbacks import get_openai_callback
 import pinecone
 
@@ -21,7 +21,11 @@ os.environ["OPENAI_API_KEY"] = open_api_key
 
 
 
-def get_structured_job_data(input_text:str)-> object:
+def get_structured_data(
+        llm : object,
+        input_text:str,
+        schema:object
+    ) -> object:
     """_summary_
 
     Args:
@@ -30,17 +34,9 @@ def get_structured_job_data(input_text:str)-> object:
     Returns:
         object: JSON object Job Data
     """
-    ### Define a LLM here
-    llm = ChatOpenAI(
-        model_name='gpt-3.5-turbo',
-        # model_name='gpt-4',
-        temperature=0.9,
-        max_tokens=2000
-    )
-
     chain = create_extraction_chain(
         llm,
-        company_job_schema,
+        schema,
         encoder_or_encoder_class="json"
     )
     prompt_text = chain.prompt.format_prompt("[user_input]").to_string()
@@ -61,21 +57,53 @@ def get_structured_job_data(input_text:str)-> object:
         print (f"Total Cost:{cb.total_cost}")
     return output
 
-input_text = """Lead brainstorming sessions to develop potential solutions for business needs or problems
-Provide specifications according to which the solution is defined, managed, and delivered
-Identify opportunities for process improvements
-Define features, development phases, and solution requirements.
-Supervised, Unsupervised and reinforcement learning Using Python
-Set-up, maintenance, and ongoing development of continuous build/ integration infrastructure (CI/CD)
-Experience with different NoSQL and SQL, graph databases
+def get_parsed_llm():
+    ## get input texts
+    job_text= ""
+    applicant_text = ""
 
+    ## LLM Model
+    llm = ChatOpenAI(
+        model_name='gpt-3.5-turbo',
+        # model_name='gpt-4',
+        temperature=0.9,
+        max_tokens=2000
+    )
 
-Engage with AI vendors to evaluate off-the-shelf solutions and identify potential applications within the organization.
-Collaborate with cross-functional teams to assess the feasibility, effectiveness, and potential impact of AI solutions on business processes and outcomes.
-Provide guidance and support in the integration and adoption of AI technologi1es within the organization.
-Assist in the development of AI-related strategies, roadmaps, and initiatives
-"""
+    ## Embeddings Model
+    embed =  
 
+    ### Pinecone model
+    pinecone.init(
+        api_key=pinecone_api_key,
+        environment=pinecone_environment
+    )
+    index_name = "job-search"
+
+    if index_name not in pinecone.list_indexes():
+        pinecone.create_index(
+            index_name = index_name
+        )
+    pc_index = pinecone.Index(index_name)
+    job_post_data = get_structured_data(
+        llm = llm,
+        input_text = job_text,
+        schema = company_job_schema
+    )
+
+    applicant_data = get_structured_data(
+        llm = llm,
+        input_text = applicant_text,
+        schema = applicant_schema
+    )
+
+    ## push everything into pinecone
+    job_post_data["type"] = "job_post"
+    applicant_data["type"] = "resume"
+
+    # pinecone.upsert(upload_chunk)
+input_text= ""
+get_structured_data(input_text,applicant_schema)
 
 
 

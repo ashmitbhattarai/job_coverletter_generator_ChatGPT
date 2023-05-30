@@ -31,7 +31,8 @@ ShopGrok
 09/2018 - 05/2022,
 ShopGrok is a provider of consumer insights and data analytics to the retail and consumer sector
 Sydney,Australia
-Achievements/Tasks
+
+Achievements/Tasks:
 
 Design, develop, modify, document, test, implement, and maintain ShopGrok Data Mining and Ingestion
 Pipeline for SaaS platform. Scaled up the infrastructure to collect 1+ Million data points daily.
@@ -43,7 +44,7 @@ Freelancer, Python Developer
 Upwork Inc.
 09/2015 - 09/2018,
 
-Achievements/Tasks
+Achievements/Tasks:
 Experience working on 17 different projects with 100% job success rate to gain Top-Rated Freelancer status.
 Work with remote teams, excellent communication skills, identify clients' requirements, design
 correct solutions and complete deliverables on time.
