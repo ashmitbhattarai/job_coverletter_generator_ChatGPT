@@ -3,5 +3,5 @@ langchain
 kor
 openai
 tiktoken
-pinecone
+pinecone-client
 pylint
