@@ -4,3 +4,4 @@ kor
 openai
 tiktoken
 pinecone
+pylint
