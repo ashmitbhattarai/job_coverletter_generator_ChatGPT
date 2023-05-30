@@ -3,7 +3,6 @@ import os
 try:
     keys = yaml.safe_load(open('api_tokens.yaml','r+'))
     if "OPENAI_API_KEY" in os.environ:
-        print ("here")
         open_api_key = os.environ["OPENAI_API_KEY"]
     else:
         open_api_key = keys["openai"]["open_api_key"]
@@ -12,4 +11,3 @@ try:
     pinecone_environment = keys["pinecone"]["pinecone_environment"]
 except:
     print ("Configure your Keys in api_tokens.yaml")
-print (open_api_key)
