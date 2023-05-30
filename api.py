@@ -23,9 +23,9 @@ os.environ["HUGGINGFACEHUB_API_TOKEN"] = hugging_face_api_key
 
 def get_structured_data(
         llm : object,
-        input_text:str,
-        schema:object
-    ) -> object:
+        input_text: str,
+        schema: object
+    ) -> dict:
     """_summary_
 
     Args:
@@ -38,7 +38,7 @@ def get_structured_data(
         llm=llm,
         node=schema,
         encoder_or_encoder_class="json"
-    )
+    ) # type: ignore
     prompt_text = chain.prompt.format_prompt("[user_input]").to_string()
 
     # p50k_base for davinci2 and 3, cl100k_base for gpt4,3.5 turbo, embeddings
@@ -63,14 +63,19 @@ def get_parsed_llm():
     applicant_text = ""
 
     ## LLM Model
+    # llm = ChatOpenAI(
+    #     model_name='gpt-3.5-turbo',
+    #     openai_api_key=open_api_key,
+    #     # model_name='gpt-4',
+    #     temperature=0.9,
+    #     max_tokens=2000
+    # )
     llm = ChatOpenAI(
-        model_name='gpt-3.5-turbo',
-        openai_api_key=open_api_key,
-        # model_name='gpt-4',
+        model="gpt-3.5-turbo",
         temperature=0.9,
-        max_tokens=2000
-    )
-
+        max_tokens=2000,
+        openai_api_key=open_api_key
+    ) # type: ignore
     ## Embeddings Model
     embed =  ""
 
@@ -83,8 +88,8 @@ def get_parsed_llm():
 
     if index_name not in pinecone.list_indexes():
         pinecone.create_index(
-            index_name = index_name
-        )
+            name = index_name
+        ) #type: ignore
     pc_index = pinecone.Index(index_name)
     job_post_data = get_structured_data(
         llm = llm,
