@@ -1,8 +1,8 @@
 ---
 huggingface:
-  hugging_face_api_key: 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
+  hugging_face_api_key: hpkey
 openai:
-  open_api_key: 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
+  open_api_key: openkey
 pinecone:
-  pinecone_api_key: b6f9af31-fdda-4ed4-aaed-1c2956a4baf2
-  pinecone_environment: asia-southeast1-gcp
+  pinecone_api_key: pinekey
+  pinecone_environment: pineconenv
