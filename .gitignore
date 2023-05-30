@@ -1,3 +1,4 @@
-api_keys.py
 */__pycache__
 *.pyc
+*_data.txt
+*api_tokens.yaml
