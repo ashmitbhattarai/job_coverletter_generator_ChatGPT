@@ -1,3 +1,10 @@
 # Cover Letter Generator using ChatGPT
 
-loading.....
+
+
+### Requirements
+```
+- langchain
+- kor
+- pinecone
+```
