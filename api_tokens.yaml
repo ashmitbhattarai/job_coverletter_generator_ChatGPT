@@ -1,0 +1,8 @@
+---
+huggingface:
+  hugging_face_api_key: hpkey
+openai:
+  open_api_key: openkey
+pinecone:
+  pinecone_api_key: pinekey
+  pinecone_environment: pineconenv

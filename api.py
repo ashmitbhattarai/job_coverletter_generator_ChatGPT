@@ -14,10 +14,10 @@ from langchain.callbacks import get_openai_callback
 import pinecone
 
 # env variables
-from api_keys import open_api_key,hugging_face_api_key
+from api_keys import hugging_face_api_key
 from api_keys import pinecone_api_key,pinecone_environment
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = hugging_face_api_key
-os.environ["OPENAI_API_KEY"] = open_api_key
+open_api_key = os.environ["OPENAI_API_KEY"]
 
 
 
@@ -35,8 +35,8 @@ def get_structured_data(
         object: JSON object Job Data
     """
     chain = create_extraction_chain(
-        llm,
-        schema,
+        llm=llm,
+        node=schema,
         encoder_or_encoder_class="json"
     )
     prompt_text = chain.prompt.format_prompt("[user_input]").to_string()
@@ -102,8 +102,6 @@ def get_parsed_llm():
     applicant_data["type"] = "resume"
 
     # pinecone.upsert(upload_chunk)
-input_text= ""
-get_structured_data(input_text,applicant_schema)
 
 
 
