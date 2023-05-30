@@ -1,6 +1,7 @@
 #Modules for Prompt Design
 from kor import create_extraction_chain
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 
 # Standard Helper Libraries
 import pandas as pd
@@ -19,7 +20,7 @@ os.environ["OPENAI_API_KEY"] = open_api_key
 
 
 ### Define a LLM here
-llm = OpenAI(
+llm = ChatOpenAI(
     model_name='gpt-3.5-turbo',
     # model_name='gpt-4',
     temperature=0.9,
@@ -27,7 +28,7 @@ llm = OpenAI(
 )
 
 
-chain = create_extraction_chain(llm,company_job_schema)
+chain = create_extraction_chain(llm,company_job_schema,encoder_or_encoder_class="json")
 
 input_text = """Lead brainstorming sessions to develop potential solutions for business needs or problems
 Provide specifications according to which the solution is defined, managed, and delivered
@@ -46,15 +47,39 @@ Assist in the development of AI-related strategies, roadmaps, and initiatives
 
 
 
-# output = chain.predict_and_parse(text=(input_text))["data"]
-# print (output)
 
+# print (output)
+prompt_text = chain.prompt.format_prompt("[user_input]").to_string()
+import tiktoken
+
+# p50k_base for davinci2 and 3, cl100k_base for gpt4,3.5 turbo, embeddings
+encoding  = tiktoken.get_encoding('cl100k_base')
+print (prompt_text)
+print("")
+print (len(encoding.encode(prompt_text)),"tokens just in prompt\n\n")
 # i need job responsibilites, job skills, and benifits, also summary on company, company goals ????
 
 with get_openai_callback() as cb:
+    # output = chain.predict_and_parse(text=(input_text))["data"]
+    # print (output)
     print (f"Total Tokens:{cb.total_tokens}")
     print (f"Prompt Tokens:{cb.prompt_tokens}")
     print (f"Completion Tokens:{cb.completion_tokens}")
     print (f"Number of Requests:{cb.successful_requests }")
     print (f"Total Cost:{cb.total_cost}")
 
+###### Next stage: Get Data From User File#####
+
+
+###### Next Step: Write a Cover letter
+'''
+from langchain.schema import HumanMessage, SystemMessage, AIMessage
+
+chat = "ChatOpenAI(temperature=0.7)" ###llm definition
+
+chat(
+    [
+        SystemMessage(content="You are a Job Application writing bot that understands job requirements and skills requirements then takes Work Experience and skills information of User and writes a job cover letter"
+        )
+    ]
+)'''

@@ -77,3 +77,9 @@ company_job_schema = Object(
         skills_schema    
     ]
 )
+
+
+applicant_schema = Object(
+    id = "applicant_data",
+    description = "Includes applicant's name, Companies Worked for, experiences in those companies"
+)
