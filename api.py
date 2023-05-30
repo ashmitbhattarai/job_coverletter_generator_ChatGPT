@@ -14,10 +14,10 @@ from langchain.callbacks import get_openai_callback
 import pinecone
 
 # env variables
-from api_keys import hugging_face_api_key
+from api_keys import open_api_key, hugging_face_api_key
 from api_keys import pinecone_api_key,pinecone_environment
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = hugging_face_api_key
-open_api_key = os.environ["OPENAI_API_KEY"]
+
 
 
 
@@ -65,6 +65,7 @@ def get_parsed_llm():
     ## LLM Model
     llm = ChatOpenAI(
         model_name='gpt-3.5-turbo',
+        openai_api_key=open_api_key,
         # model_name='gpt-4',
         temperature=0.9,
         max_tokens=2000
