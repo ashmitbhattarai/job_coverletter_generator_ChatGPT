@@ -35,8 +35,8 @@ def get_structured_data(
         object: JSON object Job Data
     """
     chain = create_extraction_chain(
-        llm,
-        schema,
+        llm=llm,
+        node=schema,
         encoder_or_encoder_class="json"
     )
     prompt_text = chain.prompt.format_prompt("[user_input]").to_string()
@@ -102,8 +102,6 @@ def get_parsed_llm():
     applicant_data["type"] = "resume"
 
     # pinecone.upsert(upload_chunk)
-input_text= ""
-get_structured_data(input_text,applicant_schema)
 
 
 
