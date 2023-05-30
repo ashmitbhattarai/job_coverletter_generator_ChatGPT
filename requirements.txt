@@ -1,0 +1,7 @@
+pandas==1.5.3
+langchain
+kor
+openai
+tiktoken
+pinecone-client
+pylint
