@@ -1,4 +1,4 @@
-#Modules for Prompt Design
+# Modules for Prompt Design
 from kor import create_extraction_chain
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
@@ -124,10 +124,11 @@ get_structured_data(input_text,applicant_schema)
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
 chat = "ChatOpenAI(temperature=0.7)" ###llm definition
-
 chat(
     [
-        SystemMessage(content="You are a Job Application writing bot that understands job requirements and skills requirements then takes Work Experience and skills information of the applicant and writes a job cover letter. You should not add new skills or experience that applicant does not have."
+        SystemMessage(content="You are a Job Application writing bot that understands job requirements and skills requirements\
+            then takes Work Experience and skills information of the applicant and writes a job cover letter.\
+            You should not add new skills or experience that applicant does not have."
         )
     ]
 )'''
