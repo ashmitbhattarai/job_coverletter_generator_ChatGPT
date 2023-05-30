@@ -71,7 +71,7 @@ def get_parsed_llm():
     )
 
     ## Embeddings Model
-    embed =  
+    embed =  ""
 
     ### Pinecone model
     pinecone.init(
