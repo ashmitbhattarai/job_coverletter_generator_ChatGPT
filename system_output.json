@@ -1,0 +1,100 @@
+[{
+   "applicant_data": {
+      "applicant_name": "Ashmit Bhattarai",
+      "companies_worked_at": [
+         {
+            "tasks": [
+               "Design, development, documentation, testing and maintenance of Pyx Sentiment Analysis Engine with 87%+ accuracy on unseen test data. 22% increase in the detection of Sentiments.",
+               "Oversee Design, development, documentation, testing, and maintenance of Thematic Extraction Supervised Engine with 65%+ accuracy on complex Multi-Label Classi\ufb01cation System and Thematic Extraction Unsupervised Engine on new Themes Detection. 10% increased Theme Identi\ufb01cation for Open-Ended Answers.",
+               "Design and deploy Statistical Forecast Models, Predictive models for Employee Insights Analytics and Benchmarking: Fully eliminated Human-In-The-Loop processes using SnowFlake and ML algorithms.",
+               "ML Engineering: Development and deployment of ML and Deep Learning models on Pyx Cloud"
+            ],
+            "company": "Perceptyx Inc. (Pyx)",
+            "date_range": {
+               "start_date": 2017,
+               "end_date": 2023
+            }
+         }
+      ],
+      "technologies": [
+         "Tensorflow",
+         "Scikit-learn",
+         "R",
+         "Pytorch",
+         "Python",
+         "Snowflake",
+         "Tableau",
+         "Alteryx",
+         "AWS",
+         "GCP",
+         "AWS Sagemaker",
+         "Statistical Analysis",
+         "CI/CD Pipelines",
+         "MLOps",
+         "AWS Athena",
+         "PySpark",
+         "RESTful API",
+         "OpenAI",
+         "ChatGPT",
+         "LangChain",
+         "KOR",
+         "PineCone",
+         "MLFlow",
+         "Weights&Biases",
+         "Computer Vision",
+         "OpenCV",
+         "Deep Learning",
+         "Docker"
+      ],
+      "years_of_experience": "6",
+      "education": [
+         {
+            "degree": "Master of Science in Data Science",
+            "major": "Data Science",
+            "university": "Macquire University",
+            "date_range": {
+               "start_date": 2018,
+               "end_date": 2020
+            }
+         },
+         {
+            "degree": "Bachelors in Computer Engineering",
+            "major": "Computer Engineering",
+            "university": "Kathmandu University",
+            "date_range": {
+               "start_date": 2011,
+               "end_date": 2016
+            }
+         }
+      ]
+   }
+},
+{
+   "job_data": {
+      "job_title": "ML Engineer or Prompt Engineer",
+      "job_type": "contract",
+      "work_done": "building LLM-driven chatbot prototypes for an MVP",
+      "skills": {
+         "responsibilities": [
+            "Collaborate with me to understand the project requirements and design LLM-driven chatbot prototypes for product MVP.",
+            "Develop functional prototypes that demonstrate the chatbot's conversational capabilities, including personalized guidance, assessments, and goal-setting.",
+            "Implement and fine-tune LLM models to ensure the chatbot provides accurate and relevant responses.",
+            "Build a user-friendly front-end application to showcase the chatbot's functionality and create a seamless user experience."
+         ],
+         "experience": [
+            "Proven experience in machine learning and natural language processing, particularly with LLMs."
+         ],
+         "personal_skills": [
+            "Strong problem-solving and communication skills.",
+            "Self-motivated and able to work independently to deliver high-quality prototypes."
+         ]
+      },
+      "technologies": [
+         "HTML",
+         "CSS",
+         "JavaScript",
+         "Python"
+      ],
+      "company_name": "N/A"
+   }
+}]

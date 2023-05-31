@@ -6,3 +6,4 @@ tiktoken
 pinecone-client
 pylint
 pyyaml
+streamlit

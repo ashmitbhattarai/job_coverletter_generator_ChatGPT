@@ -9,27 +9,23 @@ skills_schema = Object(
     description= "All roles and responsibilities, experiences and technical skills and enlisted in a Job Description",
     attributes = [
         Text(
-            id = "technologies",
-            description="Technologies Mentioned in Job Description eg: AWS Sagemaker, CI/CD, etc"
-        ),
-        Text(
             id="responsibilities",
-            description="Roles and Responsibilites in the Job Description"
+            description="Duties, roles and responsibilites in the Job Description",
+            many=True
         ),
         Text(
             id="experience",
-            description="Experience of work in a certain industry or a tool. Can include years of experience."
+            description="Experience of work in a certain industry or a tool. Can include years of experience.",
+            many= True
         ),
         Text(
             id="personal_skills",
-            description = "Personal traits companies look for"
+            description = "Personal traits companies look for",
+            many=True
         )
     ],
     examples = [
-        (
-            "Are fluent with Python 5+ years and experienced with Jupyter notebooks",
-            [{"technologies":"Python","experience":"5+ years"},{"technologies":"Jupyter notebook"}]
-        ),
+        
         (
             "Have experience in at least one of the following: Computer Vision, neuroscience, BCI experimentation and neural signal processing",
             [{"experience":"neuroscience"},{"experience":"BCI experimentation"},{"experience":"neural signal processing"}, {"experience":"Computer Vision"}]
@@ -50,8 +46,7 @@ skills_schema = Object(
             "We are committed to attracting and retaining people who have the right mix of skills, knowledge, leadership, and self-motivation",
             [{"personal_skills":"skillfull"},{"personal_skills":"knowledgeable"},{"personal_skills":"leadership"},{"personal_skills":"motivated"}]
         )
-    ],
-    many=True
+    ]
 )
 
 company_job_schema = Object(
@@ -61,7 +56,7 @@ company_job_schema = Object(
         Text(
             id="job_title",
             description="Job title or role in Job Description",
-            examples=[("We are seeking a talented Data Scientist to join our passionate team.","Data Scientist")],
+            
             many=False
         ),
         Text(
@@ -74,6 +69,11 @@ company_job_schema = Object(
             id="work_done",
             description="What does the company uses AI services for?"
         ),
+        Text(
+            id = "technologies",
+            description="Technologies Mentioned in Job Description eg: AWS Sagemaker, CI/CD, LLM models etc",
+            many=True
+        ),
         Selection(
             id="job_type",
             description="Is the Job Full Time, Part-Time, Contract or Freelance",
@@ -84,7 +84,21 @@ company_job_schema = Object(
                 Option(id="freelance", description="None of Above"),
             ]
         ),
-        skills_schema    
+        skills_schema
+    ],
+    examples=[
+        (
+            "Are fluent with Python 5+ years and experienced with Jupyter notebooks",
+            [{"technologies":"Python"},{"technologies":"Jupyter notebook"}]
+        ),
+        (
+            "We are seeking a talented Data Scientist to join our passionate team.",
+            [{"job_title":"Data Scientist"}]
+        ),
+        (
+            "In this role, you’ll be responsible for prototyping and evaluating solutions for segmentation, localisation, and identification based on still images and/or video.",
+            [{"work_done":"segmentation, localisation, and identification on still images and/or video"}]
+        ),
     ]
 )
 
@@ -114,6 +128,46 @@ date_range = Object(
     many=True
 )
 
+company_schema = Object(
+    id = "companies_worked_at",
+    description = "all the companies that applicant has worked for including what applicant did and date of starting and ending date",
+    attributes = [
+        Text(
+            id="company",
+            description="Name of the company applicant has worked for",
+        ),
+        Text(
+            id="tasks",
+            description = "achievements, responsibilties and tasks the applicant has performed for the company",
+            many=True
+        ),
+        date_range   
+    ],
+    examples = [
+        (
+            """ShopGrok
+                09/2018 - 05/2022,
+                ShopGrok is a provider of consumer insights and data analytics to the retail and consumer sector
+                Sydney,Australia
+
+                Achievements/Tasks:
+                Design, develop, modify, document, test, implement, and maintain ShopGrok Data Mining and Ingestion
+                Pipeline for SaaS platform. Scaled up the infrastructure to collect 1+ Million data points daily.""",
+            [
+                {
+                    "tasks":[
+                    "Scaled up the infrastructure to collect 1+ Million data points daily.",
+                    "Design, develop, modify, document, test, implement, and maintain ShopGrok Data Mining and Ingestion Pipeline"
+                ],
+                    "company":"ShopGrok",
+                    "date_range":{"start_date":2018,"end_date":2021}
+                }
+            ]
+        )
+    ],
+    many=True
+)
+
 applicant_schema = Object(
     id = "applicant_data",
     description = "Includes applicant's name, Skills, Companies Worked for, experiences in those companies, Certifications, Personal Projects, Education",
@@ -123,39 +177,32 @@ applicant_schema = Object(
             description = "Name of the Person or applicant this CV or Resume is of",
             many=False
         ),
-        Text(
-            id="company",
-            description="Name of the company applicant has worked for",
-            examples = [
-                ("Work Experience Senior Data Scientist Perceptyx Inc. (Pyx): Perceptyx combines Employee Surveys","Perceptyx Inc.")
-            ],
-            many=True
-        ),
-        date_range,
+        company_schema,
         Text(
             id="technologies",
-            description = "technologies the applicant has worked on",
+            description = "relevant tools and technologies the applicant has worked with",
             many=True
         ),
-        Text(
-            id="tasks",
-            description = "achievements and task the applicant has worked on the company",
-            many=True
-        ),
+        
         Number(
             id = "years_of_experience",
             description = "Number of years the applicant has worked for ",
             examples = [
                 ("Around 6 years of experience as Python Developer and Data Scientist.",6)
             ],
+        ),
+        Text(
+            id="other_projects",
+            description = "Projects or softwares that applicant has built with relevant tools",
             many=True
-        )
+        ),
     ],
 
     examples = [
         (
-            "ChaptGPT for Job Application Cover Letter Generation using LangChain, KOR and PineCone v2",
+            "ChaptGPT for Job Application Cover Letter Generation using LLMs, LangChain, KOR and PineCone v2",
             [
+                {"technologies":"LLM"},
                 {"technologies":"ChatGPT"},
                 {"technologies":"LangChain"},
                 {"technologies":"KOR"},
@@ -175,19 +222,9 @@ applicant_schema = Object(
 
         ),
         (
-            """ShopGrok
-                09/2018 - 05/2022,
-                ShopGrok is a provider of consumer insights and data analytics to the retail and consumer sector
-                Sydney,Australia
-
-                Achievements/Tasks:
-
-                Design, develop, modify, document, test, implement, and maintain ShopGrok Data Mining and Ingestion
-                Pipeline for SaaS platform. Scaled up the infrastructure to collect 1+ Million data points daily.""",
-            [
-                {"tasks":"Design, develop, modify, document, test, implement, and maintain ShopGrok Data Mining and Ingestion Pipeline","company":"ShopGrok","date_range":{"start_date":2018,"end_date":2021}},
-                {"tasks":"Scaled up the infrastructure to collect 1+ Million data points daily.","company":"ShopGrok","date_range":{"start_date":2018,"end_date":2021}}
-            ]
+            "Interesting Projects I have built / am building: - Intent (Semantic) Phrase Extraction and Emotion Classification",
+            [{"other_projects": "Intent (Semantic) Phrase Extraction and Emotion Classification"}]
         )
+        
     ]
 )
