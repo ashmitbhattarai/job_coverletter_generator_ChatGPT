@@ -8,4 +8,10 @@
 - langchain
 - kor
 - pinecone
+- streamlit
 ```
+
+
+## CI/CD:
+- Github CI/CD for Python
+
