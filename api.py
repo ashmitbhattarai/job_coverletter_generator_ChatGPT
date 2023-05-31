@@ -13,6 +13,7 @@ import streamlit as st
 from uuid import uuid4
 import tiktoken
 import pandas as pd
+import json
 import os
 
 # Internal Libraries
@@ -49,12 +50,12 @@ def get_structured_data(
 
     # p50k_base for davinci2 and 3, cl100k_base for gpt4,3.5 turbo, embeddings
     encoding  = tiktoken.get_encoding('cl100k_base')
-    print (prompt_text)
-    print("")
+    # print (prompt_text)
+    # print("")
     print (len(encoding.encode(prompt_text)),"tokens just in prompt\n\n")
     output={}
     with get_openai_callback() as cb:
-        # output = chain.predict_and_parse(text=(input_text))["data"]
+        output = chain.predict_and_parse(text=(input_text))["data"]
         # print (output)
         print (f"Total Tokens:{cb.total_tokens}")
         print (f"Prompt Tokens:{cb.prompt_tokens}")
@@ -63,11 +64,7 @@ def get_structured_data(
         print (f"Total Cost:{cb.total_cost}")
     return output
 
-def get_parsed_llm():
-    ## get input texts
-    job_title = ""
-    job_text= ""
-    applicant_text = ""
+def get_parsed_llm(job_title,job_text,applicant_text):
 
     ## LLM Model
     llm = ChatOpenAI(
@@ -118,37 +115,60 @@ def get_parsed_llm():
     meta_data["job_post"] = job_title
     meta_data["job_post"] = job_post_data
     upload_chunk = zip(ids,[embedding],[meta_data])
-    pc_index.upsert(vectors=zip(upload_chunk))
-    
-    # embed.embed_query
-    # Pinecone.from_texts([job_text],embedding=embed,index_name=index_name)
-
+    try:
+        pc_index.upsert(vectors=zip(upload_chunk))
+    except:
+        print ("Error!!")
+    return str(json.dumps(applicant_data,indent=3)) +\
+          "\n"+ str(json.dumps(job_post_data,indent=3))
     ## push everything into pinecone
-    # job_post_data["type"] = "job_post"
-    # applicant_data["type"] = "resume"
-
-
-# print (output)
-
-
-
-# i need job responsibilites, job skills, and benifits, also summary on company, company goals ????
-
-
-
-###### Next stage: Get Data From User File#####
-
-
 ###### Next Step: Write a Cover letter
-'''
-from langchain.schema import HumanMessage, SystemMessage, AIMessage
+# '''
+# from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
-chat = "ChatOpenAI(temperature=0.7)" ###llm definition
-chat(
-    [
-        SystemMessage(content="You are a Job Application writing bot that understands job requirements and skills requirements\
-            then takes Work Experience and skills information of the applicant and writes a job cover letter.\
-            You should not add new skills or experience that applicant does not have."
-        )
-    ]
-)'''
+# chat = "ChatOpenAI(temperature=0.7)" ###llm definition
+# chat(
+#     [
+#         SystemMessage(content="You are a Job Application writing bot that understands job requirements and skills requirements\
+#             then takes Work Experience and skills information of the applicant and writes a job cover letter.\
+#             You should not add new skills or experience that applicant does not have."
+#         )
+#     ]
+# )'''
+
+###### Next stage: Streamlit -- Get Data From User #####
+st.title("Job Cover Letter Generator")
+
+refresh_form = st.form(key="Refresh")
+refresh = refresh_form.form_submit_button("Refresh")
+if refresh:
+    st.experimental_rerun()
+
+with st.form(key='job_form') as input_form:
+    job_post_title = st.text_input("Paste the Job Post Title here..")
+    job_post_body = st.text_area("Paste the Job Description here..")
+    cv_body = st.text_area("Copy Paste your CV as text here ..")
+    submitted = st.form_submit_button("Submit")
+    call_api = True
+    if submitted:
+        if job_post_title.strip() == "":
+            st.write("Please Write Something on Job Title")
+            call_api = False
+        if job_post_body.strip() == "":
+            st.write("Please Write Something on Job Description Body")
+            call_api = False
+        if cv_body.strip() == "":
+            st.write("Please Write on CV Body")
+            call_api = False
+        if call_api:
+            cover_letter = get_parsed_llm(
+                job_title=job_post_title,
+                job_text=job_post_body,
+                applicant_text=cv_body
+            )
+            st.code("COVER LETTER:\n\n"+cover_letter)
+
+
+    
+
+
