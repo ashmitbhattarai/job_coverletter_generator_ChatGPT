@@ -1,228 +1,100 @@
 [{
    "applicant_data": {
       "applicant_name": "Ashmit Bhattarai",
-      "years_of_experience": [
-         "6"
-      ],
-      "company": [
-         "Perceptyx Inc. (Pyx)",
-         "ShopGrok",
-         "Upwork Inc."
-      ],
-      "date_range": [
+      "companies_worked_at": [
          {
-            "start_date": 2017,
-            "end_date": 2023
-         },
-         {
-            "start_date": 2018,
-            "end_date": 2022
-         },
-         {
-            "start_date": 2015,
-            "end_date": 2018
+            "tasks": [
+               "Design, development, documentation, testing and maintenance of Pyx Sentiment Analysis Engine with 87%+ accuracy on unseen test data. 22% increase in the detection of Sentiments.",
+               "Oversee Design, development, documentation, testing, and maintenance of Thematic Extraction Supervised Engine with 65%+ accuracy on complex Multi-Label Classi\ufb01cation System and Thematic Extraction Unsupervised Engine on new Themes Detection. 10% increased Theme Identi\ufb01cation for Open-Ended Answers.",
+               "Design and deploy Statistical Forecast Models, Predictive models for Employee Insights Analytics and Benchmarking: Fully eliminated Human-In-The-Loop processes using SnowFlake and ML algorithms.",
+               "ML Engineering: Development and deployment of ML and Deep Learning models on Pyx Cloud"
+            ],
+            "company": "Perceptyx Inc. (Pyx)",
+            "date_range": {
+               "start_date": 2017,
+               "end_date": 2023
+            }
          }
       ],
-      "tasks": [
-         "Design, development, documentation, testing and maintenance of Pyx Sentiment Analysis Engine with 87%+ accuracy on unseen test data. 22% increase in the detection of Sentiments.",
-         "Oversee Design, development, documentation, testing, and maintenance of Thematic Extraction Supervised Engine with 65%+ accuracy on complex Multi-Label Classi\ufb01cation System and Thematic Extraction Unsupervised Engine on new Themes Detection. 10% increased Theme Identi\ufb01cation for Open-Ended Answers.",
-         "Design and deploy Statistical Forecast Models, Predictive models for Employee Insights Analytics and Benchmarking: Fully eliminated Human-In-The-Loop processes using SnowFlake and ML algorithms.",
-         "Oversee deployment of Deep Learning E-commerce Product Matching API and micro-services as ShopGrok APIs as Team Lead. 12% improvement on baseline fuzzy matching.",
-         "Experience working on 17 different projects with 100% job success rate to gain Top-Rated Freelancer status.",
-         "Work with remote teams, excellent communication skills, identify clients' requirements, design correct solutions and complete deliverables on time.",
-         "Worked with SciBase to scrape metadata from Reputed Chemistry Journals and Index them on ElasticSearch",
-         "Facebook and Twitter Data Extraction and Sentiment Analysis",
-         "Sentiment Analysis of Tweets related to Oil Corporations and its Effect on their Stock Prices"
+      "technologies": [
+         "Tensorflow",
+         "Scikit-learn",
+         "R",
+         "Pytorch",
+         "Python",
+         "Snowflake",
+         "Tableau",
+         "Alteryx",
+         "AWS",
+         "GCP",
+         "AWS Sagemaker",
+         "Statistical Analysis",
+         "CI/CD Pipelines",
+         "MLOps",
+         "AWS Athena",
+         "PySpark",
+         "RESTful API",
+         "OpenAI",
+         "ChatGPT",
+         "LangChain",
+         "KOR",
+         "PineCone",
+         "MLFlow",
+         "Weights&Biases",
+         "Computer Vision",
+         "OpenCV",
+         "Deep Learning",
+         "Docker"
       ],
-      "achievements": [
-         {
-            "description": "Commendations in Elite Academic Performance in Session 2 2019, Session 1 2020, Macquire University; Best Paper in Class, Computing Methods for Research: Aspect Based Sentiment Analysis of Reviews"
-         },
-         {
-            "description": "Won Nepal National N-Cell App Camp Hackathon Corporate Category 2014 for theOpinio: Sentiment Analysis of Brands using Tweets."
-         }
-      ],
+      "years_of_experience": "6",
       "education": [
          {
             "degree": "Master of Science in Data Science",
+            "major": "Data Science",
             "university": "Macquire University",
             "date_range": {
-               "start_date": "07/2018",
-               "end_date": "06/2020"
+               "start_date": 2018,
+               "end_date": 2020
             }
          },
          {
             "degree": "Bachelors in Computer Engineering",
+            "major": "Computer Engineering",
             "university": "Kathmandu University",
             "date_range": {
-               "start_date": "08/2011",
-               "end_date": "09/2016"
+               "start_date": 2011,
+               "end_date": 2016
             }
-         }
-      ],
-      "skills": [
-         {
-            "technology": "Tensorflow"
-         },
-         {
-            "technology": "Scikit-learn"
-         },
-         {
-            "technology": "R"
-         },
-         {
-            "technology": "Pytorch"
-         },
-         {
-            "technology": "Python"
-         },
-         {
-            "technology": "Snowflake"
-         },
-         {
-            "technology": "Tableau"
-         },
-         {
-            "technology": "Alteryx"
-         },
-         {
-            "technology": "AWS"
-         },
-         {
-            "technology": "GCP"
-         },
-         {
-            "technology": "AWS Sagemaker"
-         },
-         {
-            "technology": "Statistical Analysis"
-         },
-         {
-            "technology": "CI/CD Pipelines"
-         },
-         {
-            "technology": "MLOps AWS Athena"
-         },
-         {
-            "technology": "PySpark RESTful APIs OpenAI ChatGPT"
-         },
-         {
-            "technology": "Langchain KOR"
-         },
-         {
-            "technology": "PineCone"
-         },
-         {
-            "technology": "MLFlow, Weights&Biases"
-         },
-         {
-            "technology": "Computer Vision"
-         },
-         {
-            "technology": "OpenCV"
-         },
-         {
-            "technology": "Deep Learning"
-         },
-         {
-            "technology": "Docker"
-         }
-      ],
-      "projects": [
-         {
-            "description": "Intent (Semantic) Phrase Extraction and Emotion Classification"
-         },
-         {
-            "description": "Bi-Directional LSTM model for predicting Bitcoin Price"
-         },
-         {
-            "description": "ChaptGPT for Job Application Cover Letter Generation using LangChain, KOR and PineCone v2"
-         },
-         {
-            "description": "ChatGPT for Ecommerce Customer Service Agent"
-         },
-         {
-            "description": "Deep Learning For Face Detection and Identify Family and Friends vs Unknown Visitors (In Progress)"
          }
       ]
    }
 },
 {
    "job_data": {
-      "work_done": "Lead brainstorming sessions to develop potential solutions for business needs or problems",
-      "skills": [
-         {
-            "responsibilities": "Provide specifications according to which the solution is defined, managed, and delivered"
-         },
-         {
-            "responsibilities": "Identify opportunities for process improvements"
-         },
-         {
-            "responsibilities": "Define features, development phases, and solution requirements"
-         },
-         {
-            "skills": "Supervised, Unsupervised and reinforcement learning Using Python"
-         },
-         {
-            "skills": "Set-up, maintenance, and ongoing development of continuous build/ integration infrastructure (CI/CD)"
-         },
-         {
-            "skills": "Experience with different NoSQL and SQL, graph databases"
-         },
-         {
-            "skills": "Image and Audio Classification with TensorFlow, scikit-learn"
-         },
-         {
-            "skills": "Configuration of Watson Explorer crawl and Watson AppBuilder development using XSLT and Ruby"
-         },
-         {
-            "skills": "Entity Extraction from unstructured data like PDF"
-         },
-         {
-            "skills": "Text Similarities and Summarization with Python"
-         },
-         {
-            "skills": "Image processing with Open-CV, Pillow"
-         },
-         {
-            "skills": "Classification Model training with TensorFlow"
-         },
-         {
-            "skills": "Design Analytics dashboard with Power BI and create CI/CD pipeline with MS flow"
-         },
-         {
-            "skills": "Created custom ML models and hosted on AWS, Azure or IBM Watson"
-         },
-         {
-            "skills": "Used different AI/ML services like AWS Sagemaker, Azure ML, Watson Studio, Watson Knowledge Studio"
-         },
-         {
-            "skills": "Smart Document Understanding with IBM Watson"
-         },
-         {
-            "skills": "Power shell programming for monitoring server resources"
-         },
-         {
-            "skills": "Metadata extraction from scanned PDF"
-         },
-         {
-            "skills": "Managing project Constraints, Dependencies & Issues."
-         },
-         {
-            "skills": "Conducted system test for interfaces and component programs"
-         },
-         {
-            "skills": "Assisted in UAT and prepared go-live readiness"
-         },
-         {
-            "skills": "Proof of concept for different AI use cases"
-         },
-         {
-            "skills": "Prepare and document testing requirements"
-         },
-         {
-            "skills": "Monitoring of IBM Watson cloud usage"
-         }
-      ]
+      "job_title": "ML Engineer or Prompt Engineer",
+      "job_type": "contract",
+      "work_done": "building LLM-driven chatbot prototypes for an MVP",
+      "skills": {
+         "responsibilities": [
+            "Collaborate with me to understand the project requirements and design LLM-driven chatbot prototypes for product MVP.",
+            "Develop functional prototypes that demonstrate the chatbot's conversational capabilities, including personalized guidance, assessments, and goal-setting.",
+            "Implement and fine-tune LLM models to ensure the chatbot provides accurate and relevant responses.",
+            "Build a user-friendly front-end application to showcase the chatbot's functionality and create a seamless user experience."
+         ],
+         "experience": [
+            "Proven experience in machine learning and natural language processing, particularly with LLMs."
+         ],
+         "personal_skills": [
+            "Strong problem-solving and communication skills.",
+            "Self-motivated and able to work independently to deliver high-quality prototypes."
+         ]
+      },
+      "technologies": [
+         "HTML",
+         "CSS",
+         "JavaScript",
+         "Python"
+      ],
+      "company_name": "N/A"
    }
-}
+}]
