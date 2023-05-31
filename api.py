@@ -1,16 +1,22 @@
 # Modules for Prompt Design
 from kor import create_extraction_chain
+from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
+from langchain.vectorstores import Pinecone
+from langchain.callbacks import get_openai_callback
+
+# Interface and Parsing
+import streamlit as st
 
 # Standard Helper Libraries
+from uuid import uuid4
 import tiktoken
 import pandas as pd
 import os
 
 # Internal Libraries
 from query_schema import company_job_schema,applicant_schema
-from langchain.callbacks import get_openai_callback
 import pinecone
 
 # env variables
@@ -59,25 +65,24 @@ def get_structured_data(
 
 def get_parsed_llm():
     ## get input texts
+    job_title = ""
     job_text= ""
     applicant_text = ""
 
     ## LLM Model
-    # llm = ChatOpenAI(
-    #     model_name='gpt-3.5-turbo',
-    #     openai_api_key=open_api_key,
-    #     # model_name='gpt-4',
-    #     temperature=0.9,
-    #     max_tokens=2000
-    # )
     llm = ChatOpenAI(
-        model="gpt-3.5-turbo",
+        model_name='gpt-3.5-turbo',
+        openai_api_key=open_api_key,
+        # model_name='gpt-4',
         temperature=0.9,
-        max_tokens=2000,
-        openai_api_key=open_api_key
-    ) # type: ignore
+        max_tokens=2000
+    )# type: ignore
+    
     ## Embeddings Model
-    embed =  ""
+    embed =  OpenAIEmbeddings(
+        model="text-embeddings-ada-002",
+        openai_api_key=open_api_key
+    )
 
     ### Pinecone model
     pinecone.init(
@@ -88,8 +93,10 @@ def get_parsed_llm():
 
     if index_name not in pinecone.list_indexes():
         pinecone.create_index(
-            name = index_name
+            name = index_name,
+            dimension=1536
         ) #type: ignore
+    
     pc_index = pinecone.Index(index_name)
     job_post_data = get_structured_data(
         llm = llm,
@@ -103,13 +110,22 @@ def get_parsed_llm():
         schema = applicant_schema
     )
 
+    embedding = embed.embed_query(job_text)
+    # FLATTEN THE POST DATA
+    meta_data = {}
+    ids =  [str(uuid4())]
+    meta_data["text"] = job_text
+    meta_data["job_post"] = job_title
+    meta_data["job_post"] = job_post_data
+    upload_chunk = zip(ids,[embedding],[meta_data])
+    pc_index.upsert(vectors=zip(upload_chunk))
+    
+    # embed.embed_query
+    # Pinecone.from_texts([job_text],embedding=embed,index_name=index_name)
+
     ## push everything into pinecone
-    job_post_data["type"] = "job_post"
-    applicant_data["type"] = "resume"
-
-    # pinecone.upsert(upload_chunk)
-
-
+    # job_post_data["type"] = "job_post"
+    # applicant_data["type"] = "resume"
 
 
 # print (output)
