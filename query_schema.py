@@ -130,7 +130,7 @@ date_range = Object(
 
 company_schema = Object(
     id = "companies_worked_at",
-    description = "all the companies that applicant has worked for",
+    description = "all the companies that applicant has worked for including what applicant did and date of starting and ending date",
     attributes = [
         Text(
             id="company",
@@ -138,7 +138,7 @@ company_schema = Object(
         ),
         Text(
             id="tasks",
-            description = "achievements and tasks the applicant has done for the company",
+            description = "achievements, responsibilties and tasks the applicant has performed for the company",
             many=True
         ),
         date_range   
@@ -180,7 +180,8 @@ applicant_schema = Object(
         company_schema,
         Text(
             id="technologies",
-            description = "relevant technologies the applicant has worked on",
+            description = "relevant tools and technologies the applicant has worked with",
+            many=True
         ),
         
         Number(
@@ -189,7 +190,12 @@ applicant_schema = Object(
             examples = [
                 ("Around 6 years of experience as Python Developer and Data Scientist.",6)
             ],
-        )
+        ),
+        Text(
+            id="other_projects",
+            description = "Projects or softwares that applicant has built with relevant tools",
+            many=True
+        ),
     ],
 
     examples = [
@@ -214,6 +220,10 @@ applicant_schema = Object(
                 {"technologies":"ChatGPT"}
             ]
 
+        ),
+        (
+            "Interesting Projects I have built / am building: - Intent (Semantic) Phrase Extraction and Emotion Classification",
+            [{"other_projects": "Intent (Semantic) Phrase Extraction and Emotion Classification"}]
         )
         
     ]

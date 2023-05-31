@@ -34,14 +34,13 @@ os.environ["HUGGINGFACEHUB_API_TOKEN"] = hugging_face_api_key
 
 
 def get_parsed_llm(job_title,job_text,applicant_text):
-
+    all_data = {}
     ## LLM Models
     llm = ChatOpenAI(
-        model_name='gpt-3.5-turbo',
+        model='gpt-3.5-turbo',
         openai_api_key=open_api_key,
         # model_name='gpt-4',
-        temperature=0.0,
-        max_tokens=2000
+        temperature=0.5,
     )# type: ignore
     
     llm_summary = OpenAI(
@@ -87,7 +86,7 @@ def get_parsed_llm(job_title,job_text,applicant_text):
         llm=llm_summary,
         prompt=summary_prompt
     )
-    summary = chain.run(job_text=job_text)
+    summary = chain.run(job_text=job_title+"\n\n"+job_text)
 
     embedding = embed.embed_query(job_text)
     # FLATTEN THE POST DATA
@@ -96,11 +95,11 @@ def get_parsed_llm(job_title,job_text,applicant_text):
 
     ## meta data cannot be NULL
 
-    meta_data, cover_letter_template = generate_cover_letter(job_post_data,summary,applicant_data)
-    # meta_data["text"] = job_text
-    # meta_data["job_post"] = job_title
+    meta_data, cover_letter_prompt = generate_cover_letter(job_post_data,summary,applicant_data)
+    meta_data["text"] = job_text
+    meta_data["job_post"] = job_title
     # meta_data["job_json"] = job_post_data
-    # meta_data["summary"] = summary
+    meta_data["summary"] = summary
     upload_chunk = zip(ids,[embedding],[meta_data])
     try:
         pc_index.upsert(vectors= upload_chunk)
@@ -108,9 +107,24 @@ def get_parsed_llm(job_title,job_text,applicant_text):
         print ("Error!!",e)
     
 
-    return "["+str(json.dumps(applicant_data,indent=3)) +\
-          ",\n"+ str(json.dumps(job_post_data,indent=3)) + "]" + "\n\n"+\
-          str(summary)
+    # return "["+str(json.dumps(applicant_data,indent=3)) +\
+    #       ",\n"+ str(json.dumps(job_post_data,indent=3)) + "]" + "\n\n"+\
+    #       str(summary)
+    all_data["job_meta"] = job_post_data
+    all_data["job_summary"] = summary
+    all_data["applicant_meta"] = applicant_data
+    all_data["job_text"] = job_text
+    all_data["job_title"] = job_title
+    all_data["applicant_text"] = applicant_text
+    all_data["job_embeddings"] = embedding
+
+    json.dump(
+        fp=open(ids[0]+".json","w+"),
+        obj=all_data,
+        indent=3
+    )
+    cover_letter = llm.predict(cover_letter_prompt)
+    return cover_letter
     ## push everything into pinecone
 ###### Next Step: Write a Cover letter
 

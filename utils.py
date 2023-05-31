@@ -2,6 +2,10 @@
 from kor import create_extraction_chain
 from langchain.callbacks import get_openai_callback
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+from langchain.chat_models import ChatOpenAI
+
 
 # Standard Helper Libraries
 import tiktoken
@@ -49,30 +53,74 @@ def generate_cover_letter(job_dict,summary,applicant_dict):
     # chat.temperature=0.7
     # chat(
     # [
-    #     SystemMessage(content="You are a Job Application writing bot that understands job requirements and skills requirements.\
-    #                   Next, you take Work Experience and skills information of the applicant and writes a job cover letter addressed to Lead Data Scientist.\
-    #                   You should not add new skills or experience that applicant does not have.\
+    #     SystemMessage(content="
     #                   "
     #     )
     # ]
     #)
-    responsibilities = []
-    experiences = []
-    personal_skills = []
-
-    applicant_dict,job_dict = json.load(open("system_output.json","r+"))
+    responsibilities = ""
+    experiences = ""
+    personal_skills = ""
+    # summary = "This is a summary"
+    # applicant_dict,job_dict = json.load(open("system_output.json","r+"))
     job_role_name = job_dict["job_data"].get("job_title","Data Scientist")
     for_work= job_dict["job_data"].get("work_done","Data Science")
     
     skill_data = job_dict["job_data"]["skills"]
     if "responsibilites" in skill_data and len(skill_data["responsibilites"]) > 0:
-        responsibilities = "\n".join(responsibilities)
+        responsibilities = "\n".join(skill_data["responsibilites"])
     if "experiences" in skill_data and len(skill_data["experiences"]) > 0:
-        experiences = "\n".join(experiences)
+        experiences = "\n".join(skill_data["experiences"])
     if "personal_skills" in skill_data and len(skill_data["personal_skills"]) > 0:
-        personal_skills = "\n".join(personal_skills)
-    
+        personal_skills = "\n".join(skill_data["personal_skills"])
+    job_input_text = summary +"\n"+"Requirements:\n" + experiences + "\n" + responsibilities + "\n" + personal_skills
+
     applicant_name = applicant_dict["applicant_data"]["applicant_name"]
     applicant_experience = applicant_dict["applicant_data"]["years_of_experience"]
 
-generate_cover_letter({},"",{})
+    worked_at = ":\n Worked at:\n"
+    for work_dict in applicant_dict["applicant_data"]["companies_worked_at"]:
+        worked_at += work_dict["company"]
+        worked_at += "\nPerformed Following Duties:"
+        tasks = "\n-".join(work_dict["tasks"])
+        worked_at += tasks
+        worked_at += "\nWorked at:\n"
+
+    
+    applicant_tools = applicant_dict["applicant_data"]["technologies"]
+    applicant_tools = ", ".join(applicant_tools)
+
+    from templates import cover_letter_prompt
+    cover_letter_template = PromptTemplate(
+        template = cover_letter_prompt, 
+        input_variables=[
+            "job_role_name",
+            "job_input_text",
+            "worked_at",
+            "applicant_tools",
+            "applicant_name",
+            "years_of_experience"
+        ]
+    )
+    final_prompt = cover_letter_template.format(
+            job_role_name = job_role_name,
+            job_input_text = job_input_text,
+            worked_at = worked_at,
+            applicant_tools = applicant_tools,
+            applicant_name = applicant_name,
+            years_of_experience = applicant_experience
+    )
+    # llm = ChatOpenAI(
+    #     model_name='gpt-4',
+    #     temperature=0.7
+    # )# type: ignore
+    # chain_cover = LLMChain(
+    #     llm=llm,
+    #     prompt=cover_letter_template
+    # )
+    print (final_prompt)
+    meta_data={}
+    return meta_data,final_prompt
+
+
+# generate_cover_letter({},"",{})
