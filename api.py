@@ -133,6 +133,19 @@ def get_parsed_llm(job_title,job_text,applicant_text):
 
 
 ###### Next stage: Streamlit -- Get Data From User #####
+st.write("""<style>.css-1y4p8pa {
+  width: 100%;
+  padding: 6rem 1rem 10rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  max-width: 90rem;
+  height: fit-content;
+}
+textarea.st-bd {
+    min-height: 491px; 
+    height:fit-content;
+}
+</style>""",unsafe_allow_html=True)
 st.title("Job Cover Letter Generator")
 
 refresh_form = st.form(key="Refresh")
@@ -141,9 +154,10 @@ if refresh:
     st.experimental_rerun()
 
 with st.form(key='job_form') as input_form:
-    job_post_title = st.text_input("Paste the Job Post Title here..")
-    job_post_body = st.text_area("Paste the Job Description here..")
-    cv_body = st.text_area("Copy Paste your CV as text here ..")
+    c1, c2 = st.columns(2)
+    job_post_title = c1.text_input("Paste the Job Post Title here..")
+    job_post_body = c1.text_area("Paste the Job Description here..")
+    cv_body = c2.text_area("Copy Paste your CV as text here ..")
     submitted = st.form_submit_button("Submit")
     call_api = True
     if submitted:
@@ -162,7 +176,7 @@ with st.form(key='job_form') as input_form:
                 job_text=job_post_body,
                 applicant_text=cv_body
             )
-            st.code("COVER LETTER:\n\n"+cover_letter)
+            st.text_area("COVER LETTER:\n\n"+cover_letter)
 
 
     
